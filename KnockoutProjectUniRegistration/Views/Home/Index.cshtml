@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<script src="~/Scripts/knockout-3.5.1.js"></script>
+<script src="~/Scripts/knockout-3.5.1.debug.js"></script>
+<script src="~/Scripts/jquery-3.5.0.js"></script>
+<script src="~/Scripts/knockout.mapping-latest.js"></script>
+<script src="~/Scripts/moment.js"></script>
+
+<style>
+    .divPadding {
+        padding: 10px;
+    }
+</style>
+
+<div class="divPadding">
+
+    <h2>Student Registration</h2>
+
+    <p>First Name: <input type="text" data-bind="value: firstName" /></p>
+    <p>Surname: <input type="text" data-bind="value: surname" /></p>
+    <p>Date of birth:  <input type="date" data-bind="value: dob" /></p>
+    <p>Course: <select data-bind="value: courseValue, options: courseList"></select></p>
+    <p>Married: <select data-bind="value: marriedValue, options: married"></select></p>
+
+
+    <button data-bind="click: registerStudent">Register Student</button>
+</div>
+
+<div>
+    <h2>Current Student Details</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>FirstName</th>
+                <th>Surname</th>
+                <th>Full Name</th>
+                <th>DoB</th>
+                <th>Married</th>
+                <th>Course</th>
+
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: displayStudentDetailsList">
+            <tr>
+                <td data-bind="text: displayFirstName"></td>
+                <td data-bind="text: displaySurname"></td>
+                <td data-bind="text: displayFullName"></td>
+                <td data-bind="text: displayDoB"></td>
+                <td data-bind="text: displayMarried"></td>
+                <td data-bind="text: displayCourse"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="@Url.Content("~/Scripts/University.js")" type="text/javascript"></script>
