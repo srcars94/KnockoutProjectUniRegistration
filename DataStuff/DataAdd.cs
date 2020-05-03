@@ -31,6 +31,31 @@ namespace DataStuff
             {
                 throw new Exception();
             }
+
+        }
+
+        public void UpdateExistingStudent(StudentDetailsObject student)
+        {
+            var existingStudent = context.StudentDetails.Where(w => w.Id == student.Id).SingleOrDefault();
+
+            existingStudent.FirstName = student.FirstName;
+            existingStudent.Surname = student.Surname;
+            existingStudent.DoB = student.DoB;
+            existingStudent.Course = student.Course;
+            existingStudent.Married = student.Married;
+            existingStudent.FullName = student.FullName;
+           
+           // context.StudentDetails.(newStudent);
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception();
+            }
+
         }
     }
 }

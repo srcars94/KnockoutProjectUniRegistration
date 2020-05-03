@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Http;
+using System.Net;
 
 namespace KnockoutProjectUniRegistration.Controllers
 {
@@ -42,9 +43,18 @@ namespace KnockoutProjectUniRegistration.Controllers
         {
             var dataRetreval = new DataRetreval();
 
-            var details = dataRetreval.GetCourseDetails();
+            var details = dataRetreval.GetCourseDetailsInfo();
 
             return Json(details, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetCourseDetailsInfo(string courseName, string courseDetails)
+        {
+            var dataRetreval = new DataRetreval();
+
+            var details = dataRetreval.GetCourseDetails(courseName);
+
+            return Json(details.Select(s => new { courseName = s.CourseName, courseDetails = s.CourseDetails }), JsonRequestBehavior.AllowGet);
         }
 
         [System.Web.Http.HttpPost]
@@ -55,7 +65,28 @@ namespace KnockoutProjectUniRegistration.Controllers
 
             dataAdd.WriteNewStudent(studentDetailsObject);
 
-            return null;
+            return Json(new { success = true}, JsonRequestBehavior.AllowGet);
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult GetStudentDetailsForSpecificStudent([FromBody]StudentDetailsObject studentDetailsObject)
+        {
+            var dataRetreval = new DataRetreval();
+
+            var details = dataRetreval.GetStudentDetailsForSpecificStudent(studentDetailsObject);
+
+            return Json(details, JsonRequestBehavior.AllowGet);
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult UpdateExistingStudent([FromBody] StudentDetailsObject studentDetailsObject)
+        {
+
+            var dataAdd = new DataAdd();
+
+            dataAdd.UpdateExistingStudent(studentDetailsObject);
+
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }
